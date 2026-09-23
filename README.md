@@ -8,6 +8,8 @@
 | --- | --- |
 | [ssh-connect](skills/ssh-connect/SKILL.md) | 配置 SSH 公钥认证，明确服务器端和客户端配置，验证连接并排查权限、网络及认证故障。 |
 | [herdr](skills/herdr/SKILL.md) | 在 Herdr 环境中管理终端窗格、标签页和工作区；仅在明确要求使用 Herdr 时启用。 |
+| [azure-devops-pr-code-review](skills/azure-devops-pr-code-review/SKILL.md) | Azure DevOps PR 审查；检查代码、安全和性能，按明确授权发布行内问题。 |
+| [karate-api-testing](skills/karate-api-testing/SKILL.md) | Karate 接口测试、JUnit/HTML 报告与按需只读数据库验证。 |
 
 ## 目录结构
 
@@ -17,9 +19,28 @@ my-skill/
 └── skills/
     ├── ssh-connect/
     │   └── SKILL.md
-    └── herdr/
-        └── SKILL.md
+    ├── herdr/
+    │   └── SKILL.md
+    ├── azure-devops-pr-code-review/
+    │   ├── SKILL.md
+    │   └── references/environment.md
+    └── karate-api-testing/
+        ├── SKILL.md
+        └── references/environment.md
 ```
+
+## 环境依赖
+
+安装 skill 只提供操作指引，不会自动安装运行时、配置认证或启动服务。
+
+| 技能 | 必需环境 | 可选依赖与配置 |
+| --- | --- | --- |
+| ssh-connect | OpenSSH Client、网络及可用 SSH 认证 | 服务端 sshd、公钥和主机指纹信任，详见技能说明 |
+| herdr | Herdr CLI，且当前会话处于 Herdr 管理环境 | HERDR_ENV=1；普通终端不能替代 Herdr 会话 |
+| azure-devops-pr-code-review | Git；读取 PR 元数据需 REST 客户端与认证 | PowerShell、已授权 MCP 或现有客户端；不强制 Python/uv，详见[环境配置](skills/azure-devops-pr-code-review/references/environment.md) |
+| karate-api-testing | 匹配版本的 JDK、构建工具、Karate/JUnit、runner 和测试服务 | 数据库验证可用 PostgreSQL MCP；仅所选 MCP 要求时配置 uv/uvx、Python、Node 或 Docker，详见[环境配置](skills/karate-api-testing/references/environment.md) |
+
+新加入的两个技能不依赖 dcom 的 .specify 脚本、固定服务器或内部知识库。使用前检查目标项目版本和实际命令；不要为了安装 skill 自动升级项目依赖。
 
 ## 使用 CC Switch 安装
 
