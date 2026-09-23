@@ -4,13 +4,13 @@
 
 | 项目 | 要求 |
 | --- | --- |
-| Git | 必需；可读取仓库并获取指定引用 |
-| REST 客户端 | PR 元数据和评论需要；可用 PowerShell Invoke-RestMethod、已授权 MCP 或项目已有客户端 |
-| 认证 | 服务器支持的集成认证、令牌或组织认可方式；读取和评论分别使用所需权限 |
+| Git | 内容不完整需回退，或本地测试时才需要；获取固定提交 |
+| REST 客户端 | 默认取证方式；可用 PowerShell Invoke-RestMethod、已授权 MCP 或项目已有客户端 |
+| PAT | 默认从 AZDO_PAT 或安全本机配置读取；取证需要代码读取权限，发布评论另需相应写权限 |
 | 网络 | 地址、企业 CA、VPN 和代理按环境配置，保留 TLS 验证 |
 | Python / uv | 本 skill 不需要；仅当选定的外部客户端依赖它们时按其文档配置 |
 
-运行 git --version 并确认仓库 remote。PowerShell 可用 Get-Command Invoke-RestMethod 检查客户端。环境不满足时说明缺失项，不自动安装或改系统配置。
+API 模式不要求 Git；回退时运行 git --version 并确认仓库 remote。PowerShell 可用 Get-Command Invoke-RestMethod 检查客户端。环境不满足时说明缺失项，不自动安装或改系统配置。
 
 Azure DevOps Services 基础地址通常为 https://dev.azure.com/<organization>；Server/TFS 可能包含集合路径。REST api-version 必须匹配服务端，不把最新版写死到旧服务器。Git 仓库权限不代表独立 REST 客户端已认证。
 
@@ -35,6 +35,8 @@ $azdoPrInfo | Select-Object pullRequestId,title,status,sourceRefName,targetRefNa
 ~~~
 
 不输出请求头或启用记录认证头的调试日志。401/403 检查认证及权限；404 检查集合、项目、仓库、PR 和可见性；网络失败检查代理与企业 CA，不关闭证书校验。
+
+完整分页、固定版本取证和 Git 回退见 [取证流程](review-inputs.md)。
 
 ## 官方接口
 
