@@ -8,10 +8,11 @@
 | --- | --- |
 | [ssh-connect](skills/ssh-connect/SKILL.md) | 直接连接 SSH 执行只读任务，失败时提示具体缺失条件；禁止删除等危险操作。 |
 | [herdr](skills/herdr/SKILL.md) | 在 Herdr 环境中管理终端窗格、标签页和工作区；仅在明确要求使用 Herdr 时启用。 |
-| [azure-devops-pr-code-review](skills/azure-devops-pr-code-review/SKILL.md) | PAT/API 优先审查 PR，不完整时回退 Git；加载项目规则，检查缓存、锁、并发与循环调用。 |
+| [azure-devops-pr-code-review](skills/azure-devops-pr-code-review/SKILL.md) | 固定 Azure DevOps PR 迭代，按项目规则和需求双轨审查，单列缓存、多线程、定时任务和锁的人工审核项。 |
 | [karate-api-testing](skills/karate-api-testing/SKILL.md) | Karate 接口测试、JUnit/HTML 报告与按需只读数据库验证。 |
 | [output-design](skills/output-design/SKILL.md) | 将复杂内容转为清晰中英文、图示或离线交互 HTML，保留事实、条件与来源。 |
 | [tb-query](skills/tb-query/SKILL.md) | 复用浏览器登录态查询 Teambition 项目、需求与 bug，按功能和阶段统计工时及缺陷数。 |
+| [meeting-minutes-md](skills/meeting-minutes-md/SKILL.md) | 将钉钉 AI 听记、会议转写或历史纪要整理为标准中文会议纪要 Markdown。 |
 
 ## 目录结构
 
@@ -35,9 +36,12 @@ my-skill/
     ├── tb-query/
     │   ├── SKILL.md
     │   └── references/（接口出入参与统计口径）
-    └── karate-api-testing/
+    ├── karate-api-testing/
+    │   ├── SKILL.md
+    │   └── references/environment.md
+    └── meeting-minutes-md/
         ├── SKILL.md
-        └── references/environment.md
+        └── references/（钉钉输入模板与纪要格式）
 ```
 
 ## 环境依赖
@@ -52,6 +56,7 @@ my-skill/
 | karate-api-testing | 匹配版本的 JDK、构建工具、Karate/JUnit、runner 和测试服务 | 数据库验证可用 PostgreSQL MCP；仅所选 MCP 要求时配置 uv/uvx、Python、Node 或 Docker，详见[环境配置](skills/karate-api-testing/references/environment.md) |
 | output-design | 文字与图示按宿主能力使用；生成离线 HTML 需要 Python 3，仅用标准库 | 浏览器用于视觉与交互验证；生成器无需网络或前端依赖 |
 | tb-query | 支持操作已有会话的浏览器工具、可访问 TB 的网络及目标浏览器登录态 | 工具明确支持同源会话请求时可按接口参考读取；否则使用页面查询，无需单独凭据文件 |
+| meeting-minutes-md | 可读取会议材料和 Markdown 模板 | 提供 DOCX 模板时需要能读取 DOCX |
 
 新加入的两个技能不依赖 dcom 的 .specify 脚本、固定服务器或内部知识库。使用前检查目标项目版本和实际命令；不要为了安装 skill 自动升级项目依赖。
 
